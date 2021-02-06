@@ -2,6 +2,14 @@
 
 <layout>
 
+    <data>
+
+        <variable
+            name="findOnClickListener"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -17,14 +25,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/addButton"
+            android:id="@+id/findWithAddrButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@drawable/add_button_background"
+            android:background="@drawable/shape_ffffff_r_5_strk_000000_r_2"
+            android:drawableEnd="@drawable/pizza"
             android:enabled="false"
-            android:text="@string/add_here"
-            android:textColor="@color/white"
+            android:onClick="@{findOnClickListener}"
+            android:padding="10dp"
+            android:text="@string/find_addr_desc"
+            android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -4,6 +4,7 @@ import android.graphics.PointF
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.naver.maps.geometry.LatLng
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
             ?: MapFragment.newInstance(
                 NaverMapOptions()
-                    .minZoom(10.0).maxZoom(20.0)
+                    .minZoom(15.0).maxZoom(20.0)
                     .locationButtonEnabled(true)
             ).also {
                 supportFragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
@@ -42,6 +43,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
+        setUpView()
+    }
+
+    private fun setUpView() {
+        binding.findOnClickListener = View.OnClickListener {
+            // 검색 화면으로 이동
+        }
     }
 
     override fun onMapReady(naverMap: NaverMap) {
@@ -67,28 +76,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
             angle = 90f
             map = naverMap
         }
-
-        val infoWindow = InfoWindow().apply {
-            anchor = PointF(0f, 1f)
-            offsetX = resources.getDimensionPixelSize(R.dimen.custom_info_window_offset_x)
-            offsetY = resources.getDimensionPixelSize(R.dimen.custom_info_window_offset_y)
-            adapter = InfoWindowAdapter(this@MainActivity)
-            setOnClickListener {
-                binding.addButton.isEnabled = false
-                close()
-                true
-            }
-        }
-
-        // click Event
-        naverMap.setOnMapClickListener { pointF, latLng ->
-            Log.e("ayhan", "setOnMapClickListener")
-            infoWindow.position = latLng
-            infoWindow.open(naverMap)
-
-            binding.addButton.isEnabled = true
-        }
-
 
     }
 
